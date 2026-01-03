@@ -1,0 +1,48 @@
+sites:
+  HQ:
+    site_id: 10
+    role: hq
+    wan:
+      subnet: 10.0.0.0/30
+      site_ip: 10.0.0.1
+      sp_ip: 10.0.0.2
+    vlans:
+      users:  { id: 10, subnet: 10.10.10.0/24, gw: 10.10.10.1 }
+      voice:  { id: 20, subnet: 10.10.20.0/24, gw: 10.10.20.1 }
+      mgmt:   { id: 99, subnet: 10.10.99.0/24, gw: 10.10.99.1 }
+
+  BR1:
+    site_id: 11
+    role: branch
+    wan:
+      subnet: 10.0.0.4/30
+      site_ip: 10.0.0.5
+      sp_ip: 10.0.0.6
+    vlans:
+      users:  { id: 10, subnet: 10.11.10.0/24, gw: 10.11.10.1 }
+      voice:  { id: 20, subnet: 10.11.20.0/24, gw: 10.11.20.1 }
+      mgmt:   { id: 99, subnet: 10.11.99.0/24, gw: 10.11.99.1 }
+
+  BR2:
+    site_id: 12
+    role: branch
+    wan:
+      subnet: 10.0.0.8/30
+      site_ip: 10.0.0.9
+      sp_ip: 10.0.0.10
+    vlans:
+      users:  { id: 10, subnet: 10.12.10.0/24, gw: 10.12.10.1 }
+      voice:  { id: 20, subnet: 10.12.20.0/24, gw: 10.12.20.1 }
+      mgmt:   { id: 99, subnet: 10.12.99.0/24, gw: 10.12.99.1 }
+
+  BR3:
+    site_id: 13
+    role: branch
+    wan:
+      subnet: 10.0.0.12/30
+      site_ip: 10.0.0.13
+      sp_ip: 10.0.0.14
+    vlans:
+      users:  { id: 10, subnet: 10.13.10.0/24, gw: 10.13.10.1 }
+      voice:  { id: 20, subnet: 10.13.20.0/24, gw: 10.13.20.1 }
+      mgmt:   { id: 99, subnet: 10.13.99.0/24, gw: 10.13.99.1 }
