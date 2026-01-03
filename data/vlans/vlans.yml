@@ -1,0 +1,21 @@
+vlans:
+  10:
+    name: USERS
+    purpose: "End-user devices"
+    vrf: VRF_CORP
+  20:
+    name: VOICE
+    purpose: "IP telephony devices"
+    vrf: VRF_CORP
+  99:
+    name: MGMT
+    purpose: "Device management only"
+    vrf: VRF_MGMT
+
+vrfs:
+  VRF_CORP:
+    description: "Corporate production traffic"
+  VRF_GUEST:
+    description: "Guest traffic (internet-only in real networks)"
+  VRF_MGMT:
+    description: "Management plane isolation"
