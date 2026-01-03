@@ -1,0 +1,81 @@
+routing_intent:
+  autonomous_systems:
+    enterprise_as: 65010
+    service_provider_as: 65000
+
+  protocols:
+    isp_core:
+      protocol: isis
+      level: 2
+      area_tag: "49.0001"
+      devices:
+        - SP-P1
+        - SP-P2
+
+    enterprise_igp:
+      protocol: ospf
+      process_id: 10
+      area: 0
+      devices:
+        - HQ-CORE
+        - HQ-DIST
+        - BR1
+        - BR2
+        - BR3
+
+    enterprise_region:
+      protocol: eigrp
+      asn: 100
+      devices:
+        - HQ-DIST
+
+    edge_bgp:
+      protocol: bgp
+      role: edge
+      enterprise_device: HQ-EDGE
+      isp_peer_device: SP-PE
+      enterprise_as: 65010
+      isp_as: 65000
+
+  redistribution_policy:
+    allowed_points:
+      - device: HQ-DIST
+        from: eigrp
+        to: ospf
+        method: "route-map"
+        tag: 1100
+      - device: HQ-DIST
+        from: ospf
+        to: eigrp
+        method: "route-map"
+        tag: 1200
+      - device: HQ-EDGE
+        from: bgp
+        to: ospf
+        method: "route-map"
+        tag: 1300
+
+    forbidden:
+      - rule: "No redistribution on branch routers"
+        devices:
+          - BR1
+          - BR2
+          - BR3
+      - rule: "No redistribution inside ISP core"
+        devices:
+          - SP-P1
+          - SP-P2
+
+  default_route_policy:
+    originate_default_at: HQ-EDGE
+    inject_into:
+      - protocol: ospf
+        device: HQ-EDGE
+    branches_should_prefer_default: true
+
+  summarisation_policy:
+    summarise_branches_at: HQ-DIST
+    branch_summary_blocks:
+      - 10.11.0.0/16
+      - 10.12.0.0/16
+      - 10.13.0.0/16
