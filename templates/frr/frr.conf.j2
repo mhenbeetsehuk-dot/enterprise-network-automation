@@ -1,0 +1,13 @@
+frr version 8
+frr defaults traditional
+hostname {{ hostname }}
+no ipv6 forwarding
+service integrated-vtysh-config
+!
+{% for ifname, ip in interfaces.items() %}
+interface {{ ifname }}
+ ip address {{ ip }}
+!
+{% endfor %}
+line vty
+!
