@@ -1,0 +1,8 @@
+interfaces:
+  SP-P1:
+    eth1: 10.0.0.2/30     # to HQ-EDGE
+    eth2: 10.0.0.6/30     # to BR1
+  HQ-EDGE:
+    eth1: 10.0.0.1/30     # to SP-P1
+  BR1:
+    eth1: 10.0.0.5/30     # to SP-P1
