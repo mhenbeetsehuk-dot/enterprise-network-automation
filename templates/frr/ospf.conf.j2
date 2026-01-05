@@ -1,0 +1,19 @@
+frr version 8
+frr defaults traditional
+hostname {{ hostname }}
+service integrated-vtysh-config
+!
+{% for ifname, ip in interfaces.items() %}
+interface {{ ifname }}
+ ip address {{ ip }}
+!
+{% endfor %}
+!
+router ospf {{ process_id }}
+ ospf router-id {{ router_id }}
+{% for entry in ospf_intfs %}
+ network {{ entry.network }} area {{ entry.area }}
+{% endfor %}
+!
+line vty
+!
