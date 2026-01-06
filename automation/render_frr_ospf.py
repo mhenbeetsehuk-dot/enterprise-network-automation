@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import ipaddress
 import yaml
 from jinja2 import Environment, FileSystemLoader
 
@@ -19,39 +18,26 @@ def main():
         trim_blocks=True,
         lstrip_blocks=True,
     )
-    tpl = env.get_template("frr/ospf.conf.j2")
-    dae_tpl = env.get_template("frr/daemons.j2")
+    tpl = env.get_template("frr/frr_ospf.conf.j2")
 
     out_root = ROOT / "automation" / "rendered"
     out_root.mkdir(parents=True, exist_ok=True)
 
-    for hostname, ifaces in iface_db.items():
-        # only render OSPF if router-id exists
-        if hostname not in ospf["router_ids"]:
-            continue
-
-        # build OSPF network statements from interface IPs
-        ospf_intfs = []
-        for ifname in ospf["networks"].get(hostname, []):
-            ipcidr = ifaces[ifname["interface"]]
-            net = ipaddress.ip_interface(ipcidr).network
-            ospf_intfs.append({"network": str(net), "area": ifname["area"]})
-
+    for hostname, rid in ospf["router_ids"].items():
         node_dir = out_root / hostname
         node_dir.mkdir(parents=True, exist_ok=True)
 
-        (node_dir / "daemons").write_text(dae_tpl.render() + "\n")
-        (node_dir / "frr.conf").write_text(
-            tpl.render(
-                hostname=hostname,
-                interfaces=ifaces,
-                process_id=ospf["process_id"],
-                router_id=ospf["router_ids"][hostname],
-                ospf_intfs=ospf_intfs,
-            ) + "\n"
+        rendered = tpl.render(
+            hostname=hostname,
+            interfaces=iface_db[hostname],
+            ospf_router_id=rid,
+            ospf_area=ospf["area"],
+            ospf_ifaces=set(ospf["interfaces"].get(hostname, [])),
+            ospf_network_type=ospf.get("network_type", "point-to-point"),
         )
+        (node_dir / "frr.conf").write_text(rendered + "\n")
 
-    print("✅ Rendered OSPF configs for:", ", ".join(sorted(ospf["router_ids"].keys())))
+    print("✅ Rendered FRR OSPF configs into automation/rendered/<node>/frr.conf")
 
 if __name__ == "__main__":
     main()

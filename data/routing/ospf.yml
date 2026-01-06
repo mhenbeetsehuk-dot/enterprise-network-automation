@@ -1,16 +1,13 @@
 ospf:
-  process_id: 10
   area: 0
   router_ids:
     HQ-EDGE: 1.1.1.1
     SP-P1:   2.2.2.2
     BR1:     3.3.3.3
 
-  networks:
-    HQ-EDGE:
-      - { interface: eth1, area: 0 }
-    SP-P1:
-      - { interface: eth1, area: 0 }
-      - { interface: eth2, area: 0 }
-    BR1:
-      - { interface: eth1, area: 0 }
+  interfaces:
+    HQ-EDGE: [eth1]
+    SP-P1:   [eth1, eth2]
+    BR1:     [eth1]
+
+  network_type: point-to-point
