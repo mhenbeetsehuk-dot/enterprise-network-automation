@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml jinja2
+
+      - name: Validate YAML
+        run: |
+          python automation/validate_data.py
+
+      - name: Render FRR OSPF config
+        run: |
+          python automation/render_frr_ospf.py
+          ls -R automation/rendered
+
+  integration:
+    # Only runs if you have a self-hosted runner with docker/containerlab access
+    runs-on: self-hosted
+    needs: static
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render + deploy OSPF + test
+        run: |
+          python3 automation/render_frr_ospf.py
+          bash automation/deploy_frr_ospf.sh
+          bash tests/test_ospf_full.sh SP-P1 2
