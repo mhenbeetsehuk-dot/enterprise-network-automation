@@ -1,19 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-NODES=("SP-P1" "HQ-EDGE" "BR1")
+LAB_PREFIX="clab-enterprise-skeleton-"
 
-for n in "${NODES[@]}"; do
-  c="${n}"
-  echo "==> Applying Linux IPs on $c"
+for c in $(docker ps --format '{{.Names}}' | grep "^${LAB_PREFIX}"); do
+  node="${c#${LAB_PREFIX}}"
+  src="automation/rendered/${node}/linux_ifaces.sh"
 
-  docker cp "automation/rendered/${n}/linux_ifaces.sh" "${c}:/tmp/linux_ifaces.sh"
-  docker exec "${c}" bash -lc "bash /tmp/linux_ifaces.sh"
+  echo "==> Applying Linux IPs on $node ($c)"
+  if [[ ! -f "$src" ]]; then
+    echo "ERROR: Missing $src"
+    exit 1
+  fi
 
-  echo "==> $c (links):"
-  docker exec "${c}" bash -lc "ip -br link | grep -E '^(eth|lo)'"
-  echo "==> $c (addresses):"
-  docker exec "${c}" bash -lc "ip -br addr | grep -E '^(eth|lo)'"
+  docker cp "$src" "$c:/tmp/linux_ifaces.sh"
+  docker exec "$c" sh -lc "chmod +x /tmp/linux_ifaces.sh && /tmp/linux_ifaces.sh"
+
+  docker exec "$c" sh -lc "ip -br addr | grep -E '^(eth|lo)'"
 done
 
 echo "✅ Linux IP configuration applied."

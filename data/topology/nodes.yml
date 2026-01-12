@@ -1,0 +1,7 @@
+lab_name: enterprise-skeleton
+nodes:
+  HQ-EDGE: clab-enterprise-skeleton-HQ-EDGE
+  SP-P1:   clab-enterprise-skeleton-SP-P1
+  BR1:     clab-enterprise-skeleton-BR1
+  BR2:     clab-enterprise-skeleton-BR2
+  BR3:     clab-enterprise-skeleton-BR3

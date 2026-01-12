@@ -6,7 +6,7 @@
       "prefix": "clab",
       "mgmt": {
         "network": "clab",
-        "bridge": "br-82f00a1abe55",
+        "bridge": "br-b1f82c76a0d2",
         "ipv4-subnet": "172.20.20.0/24",
         "ipv4-gw": "172.20.20.1",
         "ipv6-subnet": "3fff:172:20:20::/64",
@@ -28,13 +28,13 @@
       "image": "frrouting/frr:latest",
       "mgmt-net": "",
       "mgmt-intf": "",
-      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-address": "172.20.20.6",
       "mgmt-ipv4-prefix-length": 24,
-      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
       "mgmt-ipv6-prefix-length": 64,
       "mac-address": "",
       "labels": {
-        "clab-mgmt-net-bridge": "br-82f00a1abe55",
+        "clab-mgmt-net-bridge": "br-b1f82c76a0d2",
         "clab-node-group": "",
         "clab-node-kind": "linux",
         "clab-node-lab-dir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/BR1",
@@ -43,19 +43,18 @@
         "clab-node-type": "",
         "clab-owner": "mhen",
         "clab-topo-file": "/home/mhen/labs/enterprise-network-automation/topology/topology.clab.yml",
-        "containerlab": "enterprise-skeleton",
-        "role": "branch"
+        "containerlab": "enterprise-skeleton"
       },
       "port-bindings": [
       ]
     },
-    "HQ-EDGE": {
+    "BR2": {
       "index": "1",
-      "shortname": "HQ-EDGE",
-      "longname": "clab-enterprise-skeleton-HQ-EDGE",
-      "fqdn": "HQ-EDGE.enterprise-skeleton.io",
+      "shortname": "BR2",
+      "longname": "clab-enterprise-skeleton-BR2",
+      "fqdn": "BR2.enterprise-skeleton.io",
       "group": "",
-      "labdir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/HQ-EDGE",
+      "labdir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/BR2",
       "kind": "linux",
       "image": "frrouting/frr:latest",
       "mgmt-net": "",
@@ -66,7 +65,69 @@
       "mgmt-ipv6-prefix-length": 64,
       "mac-address": "",
       "labels": {
-        "clab-mgmt-net-bridge": "br-82f00a1abe55",
+        "clab-mgmt-net-bridge": "br-b1f82c76a0d2",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/BR2",
+        "clab-node-longname": "clab-enterprise-skeleton-BR2",
+        "clab-node-name": "BR2",
+        "clab-node-type": "",
+        "clab-owner": "mhen",
+        "clab-topo-file": "/home/mhen/labs/enterprise-network-automation/topology/topology.clab.yml",
+        "containerlab": "enterprise-skeleton"
+      },
+      "port-bindings": [
+      ]
+    },
+    "BR3": {
+      "index": "2",
+      "shortname": "BR3",
+      "longname": "clab-enterprise-skeleton-BR3",
+      "fqdn": "BR3.enterprise-skeleton.io",
+      "group": "",
+      "labdir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/BR3",
+      "kind": "linux",
+      "image": "frrouting/frr:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-b1f82c76a0d2",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/BR3",
+        "clab-node-longname": "clab-enterprise-skeleton-BR3",
+        "clab-node-name": "BR3",
+        "clab-node-type": "",
+        "clab-owner": "mhen",
+        "clab-topo-file": "/home/mhen/labs/enterprise-network-automation/topology/topology.clab.yml",
+        "containerlab": "enterprise-skeleton"
+      },
+      "port-bindings": [
+      ]
+    },
+    "HQ-EDGE": {
+      "index": "3",
+      "shortname": "HQ-EDGE",
+      "longname": "clab-enterprise-skeleton-HQ-EDGE",
+      "fqdn": "HQ-EDGE.enterprise-skeleton.io",
+      "group": "",
+      "labdir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/HQ-EDGE",
+      "kind": "linux",
+      "image": "frrouting/frr:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-b1f82c76a0d2",
         "clab-node-group": "",
         "clab-node-kind": "linux",
         "clab-node-lab-dir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/HQ-EDGE",
@@ -75,14 +136,13 @@
         "clab-node-type": "",
         "clab-owner": "mhen",
         "clab-topo-file": "/home/mhen/labs/enterprise-network-automation/topology/topology.clab.yml",
-        "containerlab": "enterprise-skeleton",
-        "role": "hq-edge"
+        "containerlab": "enterprise-skeleton"
       },
       "port-bindings": [
       ]
     },
     "SP-P1": {
-      "index": "2",
+      "index": "4",
       "shortname": "SP-P1",
       "longname": "clab-enterprise-skeleton-SP-P1",
       "fqdn": "SP-P1.enterprise-skeleton.io",
@@ -98,7 +158,7 @@
       "mgmt-ipv6-prefix-length": 64,
       "mac-address": "",
       "labels": {
-        "clab-mgmt-net-bridge": "br-82f00a1abe55",
+        "clab-mgmt-net-bridge": "br-b1f82c76a0d2",
         "clab-node-group": "",
         "clab-node-kind": "linux",
         "clab-node-lab-dir": "/home/mhen/labs/enterprise-network-automation/topology/clab-enterprise-skeleton/SP-P1",
@@ -107,8 +167,7 @@
         "clab-node-type": "",
         "clab-owner": "mhen",
         "clab-topo-file": "/home/mhen/labs/enterprise-network-automation/topology/topology.clab.yml",
-        "containerlab": "enterprise-skeleton",
-        "role": "isp-core"
+        "containerlab": "enterprise-skeleton"
       },
       "port-bindings": [
       ]
@@ -118,15 +177,15 @@
     {
       "endpoints": {
         "a": {
-          "node": "SP-P1",
+          "node": "HQ-EDGE",
           "interface": "eth1",
-          "mac": "aa:c1:ab:e3:95:b1",
+          "mac": "aa:c1:ab:e0:ce:8a",
           "peer": "z"
         },
         "z": {
-          "node": "HQ-EDGE",
+          "node": "SP-P1",
           "interface": "eth1",
-          "mac": "aa:c1:ab:b7:53:2f",
+          "mac": "aa:c1:ab:1f:95:8b",
           "peer": "a"
         }
       }
@@ -134,15 +193,47 @@
     {
       "endpoints": {
         "a": {
-          "node": "SP-P1",
-          "interface": "eth2",
-          "mac": "aa:c1:ab:0b:5c:f3",
+          "node": "BR1",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:0a:4f:72",
           "peer": "z"
         },
         "z": {
-          "node": "BR1",
+          "node": "SP-P1",
+          "interface": "eth2",
+          "mac": "aa:c1:ab:de:59:b2",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "BR2",
           "interface": "eth1",
-          "mac": "aa:c1:ab:a4:45:b6",
+          "mac": "aa:c1:ab:60:9f:a4",
+          "peer": "z"
+        },
+        "z": {
+          "node": "SP-P1",
+          "interface": "eth3",
+          "mac": "aa:c1:ab:df:c8:4c",
+          "peer": "a"
+        }
+      }
+    },
+    {
+      "endpoints": {
+        "a": {
+          "node": "BR3",
+          "interface": "eth1",
+          "mac": "aa:c1:ab:e4:aa:21",
+          "peer": "z"
+        },
+        "z": {
+          "node": "SP-P1",
+          "interface": "eth4",
+          "mac": "aa:c1:ab:03:ea:88",
           "peer": "a"
         }
       }

@@ -12,39 +12,42 @@ def load_yaml(p: Path):
 def main():
     iface_db = load_yaml(ROOT / "data/topology/interfaces.yml")["interfaces"]
     ospf = load_yaml(ROOT / "data/routing/ospf.yml")["ospf"]
+    bgp = load_yaml(ROOT / "data/routing/bgp.yml")["bgp"]
 
     env = Environment(
         loader=FileSystemLoader(str(ROOT / "templates")),
         trim_blocks=True,
         lstrip_blocks=True,
     )
-
-    tpl_frr = env.get_template("frr/frr_ospf.conf.j2")
+    tpl = env.get_template("frr/frr_bgp.conf.j2")
     tpl_daemons = env.get_template("frr/daemons.j2")
 
     out_root = ROOT / "automation" / "rendered"
     out_root.mkdir(parents=True, exist_ok=True)
 
-    # your YAML + this renderer expects: ospf.router_ids
     for hostname, rid in ospf["router_ids"].items():
         node_dir = out_root / hostname
         node_dir.mkdir(parents=True, exist_ok=True)
 
-        rendered_frr = tpl_frr.render(
+        rendered = tpl.render(
             hostname=hostname,
             interfaces=iface_db[hostname],
+
             ospf_router_id=rid,
             ospf_area=ospf["area"],
             ospf_ifaces=set(ospf.get("interfaces", {}).get(hostname, [])),
             ospf_network_type=ospf.get("network_type", "point-to-point"),
-            # optional loopbacks section if your template uses it later
-            ospf_loopback=ospf.get("loopbacks", {}).get(hostname),
-        )
+            ospf_prefixes=ospf.get("prefixes", ospf.get("networks", []) ) or ospf.get("loopbacks", {}),
 
-        (node_dir / "frr.conf").write_text(rendered_frr + "\n")
+            bgp_asn=bgp["asn"][hostname],
+            bgp_router_id=bgp["router_ids"][hostname],
+            bgp_neighbors=bgp.get("neighbors", {}).get(hostname, []),
+            bgp_networks=bgp.get("networks", {}).get(hostname, []),
+        )
+        (node_dir / "frr.conf").write_text(rendered + "\n")
         (node_dir / "daemons").write_text(tpl_daemons.render() + "\n")
 
-    print("✅ Rendered FRR OSPF configs into automation/rendered/<node>/{frr.conf,daemons}")
+    print("✅ Rendered FRR OSPF+BGP configs into automation/rendered/<node>/frr.conf")
 
 if __name__ == "__main__":
     main()

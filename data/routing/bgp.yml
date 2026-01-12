@@ -1,0 +1,53 @@
+bgp:
+  global:
+    sp_asn: 65100
+
+  nodes:
+    SP-P1:
+      asn: 65100
+      router_id: 1.1.1.1
+      neighbors:
+        HQ-EDGE:
+          ip: 10.0.0.1
+          asn: 65000
+        BR1:
+          ip: 10.0.0.5
+          asn: 65010
+        BR2:
+          ip: 10.0.0.9
+          asn: 65020
+        BR3:
+          ip: 10.0.0.13
+          asn: 65030
+
+    HQ-EDGE:
+      asn: 65000
+      router_id: 1.1.1.2
+      neighbors:
+        SP-P1:
+          ip: 10.0.0.2
+          asn: 65100
+
+    BR1:
+      asn: 65010
+      router_id: 1.1.1.11
+      neighbors:
+        SP-P1:
+          ip: 10.0.0.6
+          asn: 65100
+
+    BR2:
+      asn: 65020
+      router_id: 1.1.1.12
+      neighbors:
+        SP-P1:
+          ip: 10.0.0.10
+          asn: 65100
+
+    BR3:
+      asn: 65030
+      router_id: 1.1.1.13
+      neighbors:
+        SP-P1:
+          ip: 10.0.0.14
+          asn: 65100

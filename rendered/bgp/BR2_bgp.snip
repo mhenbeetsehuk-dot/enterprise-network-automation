@@ -1,0 +1,12 @@
+router bgp 65020
+ bgp router-id 1.1.1.12
+ no bgp ebgp-requires-policy
+ no bgp default ipv4-unicast
+ neighbor 10.0.0.10 remote-as 65100
+ neighbor 10.0.0.10 timers 3 9
+ !
+ address-family ipv4 unicast
+  neighbor 10.0.0.10 activate
+  network 1.1.1.12/32
+ exit-address-family
+!

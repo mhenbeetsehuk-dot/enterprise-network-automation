@@ -2,24 +2,14 @@ name: enterprise-skeleton
 
 topology:
   nodes:
-    SP-P1:
-      kind: linux
-      image: frrouting/frr:latest
-      labels:
-        role: isp-core
-
-    HQ-EDGE:
-      kind: linux
-      image: frrouting/frr:latest
-      labels:
-        role: hq-edge
-
-    BR1:
-      kind: linux
-      image: frrouting/frr:latest
-      labels:
-        role: branch
+    HQ-EDGE: { kind: linux, image: frrouting/frr:latest }
+    SP-P1:   { kind: linux, image: frrouting/frr:latest }
+    BR1:     { kind: linux, image: frrouting/frr:latest }
+    BR2:     { kind: linux, image: frrouting/frr:latest }
+    BR3:     { kind: linux, image: frrouting/frr:latest }
 
   links:
-    - endpoints: ["SP-P1:eth1", "HQ-EDGE:eth1"]
-    - endpoints: ["SP-P1:eth2", "BR1:eth1"]
+    - endpoints: ["HQ-EDGE:eth1", "SP-P1:eth1"]
+    - endpoints: ["BR1:eth1",    "SP-P1:eth2"]
+    - endpoints: ["BR2:eth1",    "SP-P1:eth3"]
+    - endpoints: ["BR3:eth1",    "SP-P1:eth4"]

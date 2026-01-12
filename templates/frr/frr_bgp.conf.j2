@@ -1,0 +1,39 @@
+frr defaults traditional
+hostname {{ hostname }}
+no ipv6 forwarding
+service integrated-vtysh-config
+!
+{% for ifname, cfg in interfaces.items() %}
+interface {{ ifname }}
+{% if ifname in ospf_ifaces %}
+ ip ospf network {{ ospf_network_type }}
+{% endif %}
+!
+{% endfor %}
+
+router ospf
+ ospf router-id {{ ospf_router_id }}
+{% for pfx in ospf_prefixes %}
+ network {{ pfx }} area {{ ospf_area }}
+{% endfor %}
+!
+
+router bgp {{ bgp_asn }}
+ bgp router-id {{ bgp_router_id }}
+ no bgp ebgp-requires-policy
+ !
+{% for n in bgp_neighbors %}
+ neighbor {{ n.ip }} remote-as {{ n.remote_as }}
+ neighbor {{ n.ip }} description {{ n.desc }}
+{% endfor %}
+ !
+ address-family ipv4 unicast
+{% for n in bgp_neighbors %}
+  neighbor {{ n.ip }} activate
+{% endfor %}
+{% for net in bgp_networks %}
+  network {{ net }}
+{% endfor %}
+ exit-address-family
+!
+line vty

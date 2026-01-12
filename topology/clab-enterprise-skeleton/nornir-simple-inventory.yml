@@ -3,12 +3,22 @@ BR1:
     username: 
     password: 
     platform: linux
-    hostname: 172.20.20.2
-HQ-EDGE:
+    hostname: 172.20.20.6
+BR2:
     username: 
     password: 
     platform: linux
     hostname: 172.20.20.3
+BR3:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.5
+HQ-EDGE:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.2
 SP-P1:
     username: 
     password: 

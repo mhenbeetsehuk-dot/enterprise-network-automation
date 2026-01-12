@@ -1,0 +1,16 @@
+router bgp {{ node.asn }}
+ bgp router-id {{ node.router_id }}
+ no bgp ebgp-requires-policy
+ no bgp default ipv4-unicast
+{% for peer, p in node.neighbors.items() %}
+ neighbor {{ p.ip }} remote-as {{ p.asn }}
+ neighbor {{ p.ip }} timers 3 9
+{% endfor %}
+ !
+ address-family ipv4 unicast
+{% for peer, p in node.neighbors.items() %}
+  neighbor {{ p.ip }} activate
+{% endfor %}
+  network {{ node.router_id }}/32
+ exit-address-family
+!
